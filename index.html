@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+</head>
+<body>
+      <div class="buttons-container">
+        <h1>Планер задач</h1>
+            <button data-action="addBtn">Добавить задачу</button>
+          </div>
+          
+        <form name="todo_form">
+          <div class="add_container hide_input" >
+            <input type="text" placeholder="Введите задачу" id="input">
+    
+            <select name="priority" id="filter_todo" required>
+                <option>Выберите приоритет</option>
+                <option value="un_impotrant">Не важная</option>
+                <option value="impotrant">Важная</option>
+                <option value="very_impotrant">Самая важная</option>
+            </select>
+            <h2 id="add">Создать</h2>
+          </div>
+        </form>
+        
+    <div class="select_list">
+              <div class="un_impotrant" id="1">
+                <h3>Не важные задачи</h3>
+              </div>
+              <div class="impotrant" id="2">
+                <h3>Важные задачи</h3>
+              </div>
+              <div class="very_impotrant" id="3">
+                <h3>Самые важные задачи</h3>
+        </div>
+    </div>   
+</body>
+</html>
