@@ -1,15 +1,14 @@
-import Task from "./Task.js";
-import deleteBtn from "./assets/images/delete.png";
+import {show_hide, createTask} from "./Actions.js";
+import {Task} from "./Task.js";
 
 
-const addBtn_button = document.querySelector('button[data-action="addBtn"]');
-const add_hide = document.querySelector('.add_container');
+const addBtn = document.querySelector('button[data-action="addBtn"]');
+const form = document.querySelector('form');
+const createBtn = document.querySelector('h2');
 
-addBtn_button.addEventListener("click", function() {
-console.log('add Button');
+//show form
+addBtn.addEventListener('click', (event) => show_hide(event.target));
 
-if (add_hide.classList.contains("hide_input")) {
- add_hide.classList.toggle("show_input");
-} 
-this.classList.toggle("active");
-})
+//create a new task
+createBtn.addEventListener('click', (event) => createTask(event));
+
