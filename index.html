@@ -14,14 +14,14 @@
           
           <div class="add_container hide_input" >
             <form name="todo_form">
-            <input type="text" placeholder="Введите задачу" id="input">
+            <input type="text" name="text" placeholder="Введите задачу" >
             <select name="priority" id="filter_todo" required>
                 <option>Выберите приоритет</option>
                 <option value="un_impotrant">Не важная</option>
                 <option value="impotrant">Важная</option>
                 <option value="very_impotrant">Самая важная</option>
             </select>
-            <h2 type="submit" id="add">Создать</h2>
+            <button data-action="create" type="submit">Создать</button>
             </form>
           </div>
               

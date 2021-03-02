@@ -13,8 +13,8 @@ export function show_hide(addBtn){
     } 
 }
 
-export function createTask() {
-    console.log('create task')
+export function createTask(event) {
+      event.preventDefault();
 
     let text = document.querySelector('input[type="text"]');
     let option = document.querySelectorAll('option');
@@ -36,4 +36,7 @@ export function createTask() {
         option[3].selected = false;
     }
     
+    if(text.value === '') return ;
+
+    console.log(text.value)
 }
