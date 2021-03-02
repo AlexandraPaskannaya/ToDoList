@@ -12,29 +12,31 @@
             <button data-action="addBtn">Добавить задачу</button>
           </div>
           
-        <form name="todo_form">
           <div class="add_container hide_input" >
-            <input type="text" placeholder="Введите задачу" id="input">
-    
+            <form name="todo_form">
+            <input type="text" name="text" placeholder="Введите задачу" >
             <select name="priority" id="filter_todo" required>
                 <option>Выберите приоритет</option>
                 <option value="un_impotrant">Не важная</option>
                 <option value="impotrant">Важная</option>
                 <option value="very_impotrant">Самая важная</option>
             </select>
-            <h2 id="add">Создать</h2>
+            <button data-action="create" type="submit">Создать</button>
+            </form>
           </div>
-        </form>
-        
+              
     <div class="select_list">
-              <div class="un_impotrant" id="1">
+              <div class="un_impotrant">
                 <h3>Не важные задачи</h3>
+                <ul></ul>
               </div>
-              <div class="impotrant" id="2">
+              <div class="impotrant">
                 <h3>Важные задачи</h3>
+                <ul></ul>
               </div>
-              <div class="very_impotrant" id="3">
+              <div class="very_impotrant">
                 <h3>Самые важные задачи</h3>
+                <ul></ul>
         </div>
     </div>   
 </body>
