@@ -2,8 +2,6 @@ import deleteImg from "./assets/images/delete.png";
 
 import "./assets/styles/style.css";
 
-
- 
 export default class Task{
 
     constructor(name, checked = false) {
@@ -27,9 +25,10 @@ export default class Task{
         deleteBtn.src = deleteImg;
         deleteBtn.classList.add('deletBtn');
         li.append(deleteBtn);
+        li.classList.add('show')
 
         const ul = document.querySelector('ul');
         ul.append(li);
     }
-}
 
+}

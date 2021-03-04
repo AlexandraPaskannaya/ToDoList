@@ -153,3 +153,12 @@ img{
 ul{
   padding: inherit;
 }
+
+.show{
+  height: auto;
+}
+
+.hide{
+  overflow: hidden;
+  height: 0px;
+}
