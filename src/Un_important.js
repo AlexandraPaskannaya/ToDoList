@@ -1,25 +1,21 @@
-import { UnimportantStore } from "./Store";
+import { unImportantStore } from "./Store";
 import Task from "./Task";
 
 export default class UnimportantTask extends Task {
-
-    constructor(name, checked){
-         super(name, checked);
-    }
 
     create(li) {
 
         super.create(li);
 
-        li.setAttribute('data-un_important', UnimportantStore.length);
+        li.setAttribute('data-un_important', unImportantStore.length);
 
         document.querySelector('div.un_impotrant ul').append(li);
 
-        this.id = UnimportantStore.length;
+        this.id = unImportantStore.length;
 
-        UnimportantStore.push(this);
+        unImportantStore.push(this);
 
-        console.log("UnimportantStore", UnimportantStore)
+        console.log("unImportantStore", unImportantStore)
 
     }
 }

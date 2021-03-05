@@ -1,25 +1,21 @@
-import { ImportantStore } from "./Store";
+import { importantStore } from "./Store";
 import Task from "./Task"
 
 export default class ImportantTask extends Task {
-
-    constructor(name, checked){
-         super(name, checked);
-    }
 
     create(li) {
 
         super.create(li);
 
-        li.setAttribute('data-important', ImportantStore.length)
+        li.setAttribute('data-important', importantStore.length)
 
         document.querySelector('div.impotrant ul').append(li);
        
-        this.id = ImportantStore.length;
+        this.id = importantStore.length;
 
-        ImportantStore.push(this);
+        importantStore.push(this);
 
-        console.log("ImportantStore", ImportantStore);
+        console.log("importantStore", importantStore);
 
     }
 }
