@@ -50,6 +50,10 @@ button[data-action="create"]{
   color: white;
   background-color: #659999;
 }
+
+h3:hover{
+  cursor: pointer;
+}
   
 div.list-container {
   overflow: hidden;
@@ -57,20 +61,7 @@ div.list-container {
   height: auto;
 }
 
-li{
-  height: 30px;
-  transition: height 0.3s ease-out;
-  list-style-type: none;
-  width: auto;
-}
-  
-li.checked{
-  overflow: hidden;
-  transition: height 0.3s ease-out;
-  height: 0px;
-  cursor: pointer; 
-}
-  
+
 input, label {
   cursor: pointer;
   font-size: 19px;
@@ -155,7 +146,9 @@ ul{
 }
 
 .show{
-  height: auto;
+  height: 35px;
+  list-style-type: none;
+  transition: height 0.5s ease-out;
 }
 
 .hide{

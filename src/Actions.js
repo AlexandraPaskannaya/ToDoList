@@ -19,11 +19,15 @@ export function createTask(event) {
     let text = document.querySelector('input[type="text"]');
     let option = document.querySelectorAll('option');
     let li = document.createElement('li');
+    li.classList.add('show');
 
-    if(text.value === '') return ;
-    console.log(text.value)
+    const {value} = text;
+    if(value === '' || findDublicate(value)) {
+        console.log('error');
+        return;
+    }
 
-    if (option[1].selected) {
+     if (option[1].selected) {
         new UnimportantTask(text.value).create(li);
         text.value = '';
         option[1].selected = false;
@@ -48,29 +52,25 @@ export function checkedTask(event) {
         console.log('true')
         event.target.setAttribute('checked', event.target.checked);
                 
-        let taskType = event.target.nextElementSibling.parentElement.dataset;
+        let taskType = event.target.parentElement.dataset;
         let taskName = Object.keys(taskType)[0];
 
     if(taskName === 'un_impotrant') {
 
-        findCheckedStore(unImportantStore, taskType, taskName, event.target.checked) 
+        const unImpotrantIndex = unImportantStore.findIndex(un_impotrant => un_impotrant.id === taskType[taskName]);
+        unImportantStore[unImpotrantIndex].checked = event.target.checked
         
     } else if (taskName === 'impotrant') {
 
-        findCheckedStore(importantStore, taskType, taskName, event.target.checked) 
+        const impotrantIndex = importantStore.findIndex(impotrant => impotrant.id === taskType[taskName]);
+        importantStore[impotrantIndex].checked = event.target.checked;
        
     } else if (taskName === 'very_impotrant') {
      
-        findCheckedStore(veryImportantStore, taskType, taskName, event.target.checked) 
-
+        const veryImpotrantIndex = veryImportantStore.findIndex(very_impotrant => very_impotrant.id === taskType[taskName]);
+        veryImportantStore[veryImpotrantIndex].checked = event.target.checked;
         }
     }
-}
-
-function findCheckedStore(store, type, name, checkedStatus) {
-    const storeElement = store.findIndex(element => element.id.toString() === type[name]);
-    store[storeElement].checked = checkedStatus;
-    console.log('store', store);
 }
 
 export function removeTask(event) {
@@ -80,22 +80,22 @@ export function removeTask(event) {
         event.target.closest('li').remove();
 
         if (taskName === 'un_impotrant') {
-            const unImpotrantIndex = unImportantStore.findIndex(un_impotrant => un_impotrant.id.toString() === taskType[taskName]);
+            const unImpotrantIndex = unImportantStore.findIndex(un_impotrant => un_impotrant.id === taskType[taskName]);
             unImportantStore.splice(unImpotrantIndex, 1);
             calculateAttributes(unImportantStore, 'data-un_important');
 
             console.log('unImportantStore', unImportantStore);
 
         } else if (taskName === 'impotrant') {
-            const impotrantIndex = importantStore.findIndex(impotrant => impotrant.id.toString() === taskType[taskName]);
+            const impotrantIndex = importantStore.findIndex(impotrant => impotrant.id === taskType[taskName]);
             importantStore.splice(impotrantIndex, 1);
             calculateAttributes(importantStore, 'data-important');
 
             console.log('ImportantStore', ImportantStore);
 
         } else if (taskName === 'very_impotrant') {
-            const vetyImpotrantIndex = veryImportantStore.findIndex(very_impotrant => very_impotrant.id.toString() === taskType[taskName]);
-            veryImportantStore.splice(vetyImpotrantIndex, 1);
+            const vetyImpotrantIndex = veryImportantStore.findIndex(very_impotrant => very_impotrant.id === taskType[taskName]);
+            veryImportantStore.splice(veryImpotrantIndex, 1);
             calculateAttributes(veryImportantStore, 'data-very_important');
 
             console.log('veryImportantStore', veryImportantStore);
@@ -108,9 +108,38 @@ export function removeTask(event) {
 function calculateAttributes(store, attribute) {
     const list = document.querySelectorAll(`[${attribute}]`);
 
-        console.log('list', list[0]);
+    console.log('list', list[0]);
+    
     for (let i in store) {
+        store[i].id = i;
         list[i].setAttribute(attribute, i);
     }
 }
 
+export function hideTasks(event) {
+
+    if (event.target.tagName == 'UL') {
+       return;
+   } else {
+       for(let li of Array.from(event.target.nextElementSibling.children)){
+            if(li.firstElementChild.checked == true){
+                li.classList.toggle('hide');
+               li.classList.add('show');
+           }
+       }
+   }
+}
+
+function findDublicate(name){
+    let unImpotrantIndex = unImportantStore.findIndex(element => element.name === name);
+    let impotrantIndex = importantStore.findIndex(element => element.name === name);
+    let veryImpotrantIndex = veryImportantStore.findIndex(element => element.name === name);
+
+    console.log('findD',unImpotrantIndex, impotrantIndex, veryImpotrantIndex )
+
+    if(unImpotrantIndex === -1 && impotrantIndex === -1 && veryImpotrantIndex === -1) {
+        return false;
+    } else {
+        return true
+    }
+}

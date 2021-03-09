@@ -10,13 +10,12 @@ export default class Task{
     }
 
     create(li) {
-        console.log("add li");
         let text = document.querySelector('input[type="text"]');
 
         const input = document.createElement('input');
         input.type = 'checkbox';
         li.append(input);
-
+   
         const label = document.createElement('label');
         label.textContent = text.value;
         li.append(label);
@@ -25,8 +24,7 @@ export default class Task{
         deleteBtn.src = deleteImg;
         deleteBtn.classList.add('deletBtn');
         li.append(deleteBtn);
-        li.classList.add('show')
-
+       
         const ul = document.querySelector('ul');
         ul.append(li);
     }
