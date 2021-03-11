@@ -7,9 +7,9 @@ export default class UnimportantTask extends Task {
 
         super.create(li);
 
-        li.setAttribute('data-un_important', unImportantStore.length);
+        li.setAttribute('data-unimportant', unImportantStore.length);
 
-        document.querySelector('div.un_impotrant ul').append(li);
+        document.querySelector('div.unimportant ul').append(li);
 
         this.id = unImportantStore.length;
 

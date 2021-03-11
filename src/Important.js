@@ -9,7 +9,7 @@ export default class ImportantTask extends Task {
 
         li.setAttribute('data-important', importantStore.length)
 
-        document.querySelector('div.impotrant ul').append(li);
+        document.querySelector('div.important ul').append(li);
        
         this.id = importantStore.length;
 

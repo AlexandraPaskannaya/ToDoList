@@ -1,7 +1,5 @@
 import {show_hide, createTask, checkedTask, removeTask, hideTasks} from "./Actions.js";
 
-
-
 const addBtn = document.querySelector('button[data-action="addBtn"]');
 const createBtn = document.querySelector('button[data-action="create"]');
 const titles = document.querySelector('div.select_list');
@@ -17,7 +15,7 @@ createBtn.addEventListener('click', (event) => createTask(event));
 titles.addEventListener('click', checkedTask);
 
 //remove Task
-titles.addEventListener('click', removeTask);
+titles.addEventListener('click', (event) => removeTask(event));
 
 //show-hide titles
 titles.addEventListener('click', hideTasks);

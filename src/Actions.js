@@ -21,94 +21,122 @@ export function createTask(event) {
     let li = document.createElement('li');
     li.classList.add('show');
 
-    const {value} = text;
+    const { value } = text;
+    console.log('createTask', value);
+
     if(value === '' || findDublicate(value)) {
         console.log('error');
         return;
     }
+    
 
      if (option[1].selected) {
         new UnimportantTask(text.value).create(li);
         text.value = '';
         option[1].selected = false;
+        tolacal();        
 
     } else if (option[2].selected) {
         new ImportantTask(text.value).create(li);
         text.value = '';
         option[2].selected = false;
+        tolacal();
         
     } else if (option[3].selected) {
         new VeryimportantTask(text.value).create(li);
         text.value = '';
         option[3].selected = false;
-    }  
+        tolacal();    }  
+  
 }
 
 export function checkedTask(event) {
-   
+   console.log('checked')
     if (event.target.tagName != 'INPUT') {
         return;
     } else {
         console.log('true')
         event.target.setAttribute('checked', event.target.checked);
                 
-        let taskType = event.target.parentElement.dataset;
-        let taskName = Object.keys(taskType)[0];
+        const taskType = event.target.parentElement.dataset;
+        const taskName = Object.keys(taskType)[0];
 
-    if(taskName === 'un_impotrant') {
+        console.log(taskType, 'taskType')
 
-        const unImpotrantIndex = unImportantStore.findIndex(un_impotrant => un_impotrant.id === taskType[taskName]);
-        unImportantStore[unImpotrantIndex].checked = event.target.checked
-        
-    } else if (taskName === 'impotrant') {
+    if(taskName === 'unimportant') {
 
-        const impotrantIndex = importantStore.findIndex(impotrant => impotrant.id === taskType[taskName]);
-        importantStore[impotrantIndex].checked = event.target.checked;
+        const unImportantIndex = unImportantStore.findIndex(unimportant => unimportant.id == taskType[taskName]);
+        console.log(unImportantIndex, 'unImportantIndex');
+
+        unImportantStore[unImportantIndex].checked = event.target.checked;
+        console.log(unImportantStore, 'unImportantStore')
+
+        tolacal();
+
+    } else if (taskName === 'important') {
+
+        const importantIndex = importantStore.findIndex(important => important.id == taskType[taskName]);
+        console.log(importantIndex, 'importantIndex');
+
+        importantStore[importantIndex].checked = event.target.checked;
+        console.log(importantStore, 'importantStore')
+
+        tolacal();
        
-    } else if (taskName === 'very_impotrant') {
+    } else if (taskName === 'veryimportant') {
      
-        const veryImpotrantIndex = veryImportantStore.findIndex(very_impotrant => very_impotrant.id === taskType[taskName]);
-        veryImportantStore[veryImpotrantIndex].checked = event.target.checked;
+        const veryImportantIndex = veryImportantStore.findIndex(veryimportant => veryimportant.id == taskType[taskName]);
+        console.log(veryImportantIndex, 'veryImportantIndex');
+
+        veryImportantStore[veryImportantIndex].checked = event.target.checked;
+        console.log(veryImportantStore, 'veryImportantStore')
+
+        tolacal();
         }
     }
 }
 
 export function removeTask(event) {
-    if (event.target.tagName === 'IMG' && event.target.closest('li').firstElementChild.checked === true) {
-        let taskType = event.target.parentElement.dataset;
-        let taskName = Object.keys(event.target.parentElement.dataset)[0];
+    console.log('remove')
+       
+      if (event.target.classList.contains('deletBtn') && event.target.closest('li').firstElementChild.checked === true) {
+     
+        const taskType = event.target.parentElement.dataset;
+        const taskName = Object.keys(event.target.parentElement.dataset)[0];
         event.target.closest('li').remove();
 
-        if (taskName === 'un_impotrant') {
-            const unImpotrantIndex = unImportantStore.findIndex(un_impotrant => un_impotrant.id === taskType[taskName]);
-            unImportantStore.splice(unImpotrantIndex, 1);
-            calculateAttributes(unImportantStore, 'data-un_important');
-
+        if (taskName === 'unimportant') {
+            const unImportantIndex = unImportantStore.findIndex(unimportant => unimportant.id == taskType[taskName]);
+            unImportantStore.splice(unImportantIndex, 1);
+            calculateAttributes(unImportantStore, 'data-unimportant');
+            tolacal();
             console.log('unImportantStore', unImportantStore);
 
-        } else if (taskName === 'impotrant') {
-            const impotrantIndex = importantStore.findIndex(impotrant => impotrant.id === taskType[taskName]);
-            importantStore.splice(impotrantIndex, 1);
+        } else if (taskName === 'important') {
+            const importantIndex = importantStore.findIndex(important => important.id == taskType[taskName]);
+            importantStore.splice(importantIndex, 1);
             calculateAttributes(importantStore, 'data-important');
+            tolacal();
+            console.log('importantStore', importantStore);
 
-            console.log('ImportantStore', ImportantStore);
-
-        } else if (taskName === 'very_impotrant') {
-            const vetyImpotrantIndex = veryImportantStore.findIndex(very_impotrant => very_impotrant.id === taskType[taskName]);
-            veryImportantStore.splice(veryImpotrantIndex, 1);
-            calculateAttributes(veryImportantStore, 'data-very_important');
-
+        } else if (taskName === 'veryimportant') {
+            const veryImportantIndex = veryImportantStore.findIndex(veryimportant => veryimportant.id == taskType[taskName]);
+            veryImportantStore.splice(veryImportantIndex, 1);
+            calculateAttributes(veryImportantStore, 'data-veryimportant');
+            tolacal();
             console.log('veryImportantStore', veryImportantStore);
         }
     } else {
         return
     }
+
+  
 }
 
 function calculateAttributes(store, attribute) {
     const list = document.querySelectorAll(`[${attribute}]`);
 
-    console.log('list', list[0]);
+    console.log('list', list);
     
     for (let i in store) {
         store[i].id = i;
@@ -118,7 +146,7 @@ function calculateAttributes(store, attribute) {
 
 export function hideTasks(event) {
 
-    if (event.target.tagName == 'UL') {
+   if (event.target.tagName == 'UL') {
        return;
    } else {
        for(let li of Array.from(event.target.nextElementSibling.children)){
@@ -131,15 +159,30 @@ export function hideTasks(event) {
 }
 
 function findDublicate(name){
-    let unImpotrantIndex = unImportantStore.findIndex(element => element.name === name);
-    let impotrantIndex = importantStore.findIndex(element => element.name === name);
-    let veryImpotrantIndex = veryImportantStore.findIndex(element => element.name === name);
 
-    console.log('findD',unImpotrantIndex, impotrantIndex, veryImpotrantIndex )
+    let unImportantIndex = unImportantStore.findIndex(elem => elem.name === name);
+    let importantIndex = importantStore.findIndex(elem => elem.name === name);
+    let veryImportantIndex = veryImportantStore.findIndex(elem => elem.name === name);
 
-    if(unImpotrantIndex === -1 && impotrantIndex === -1 && veryImpotrantIndex === -1) {
+    console.log('findDublicate', unImportantIndex, importantIndex, veryImportantIndex);
+
+    if(unImportantIndex === -1 && importantIndex === -1 && veryImportantIndex === -1) {
         return false;
     } else {
-        return true
+        return true;
     }
 }
+
+let todos;
+let list = document.querySelector('div.select_list');
+
+ function tolacal() {
+    console.log('local storage')
+  todos = list.innerHTML;
+  localStorage.setItem('todos', todos);
+  }
+ if(localStorage.getItem('todos')){
+    list.innerHTML = localStorage.getItem('todos')
+}
+
+//localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));

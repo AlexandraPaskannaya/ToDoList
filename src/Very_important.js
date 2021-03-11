@@ -7,9 +7,9 @@ export default class VeryimportantTask extends Task {
 
         super.create(li);
 
-        li.setAttribute('data-very_important', veryImportantStore.length);  
+        li.setAttribute('data-veryimportant', veryImportantStore.length);  
 
-        document.querySelector('div.very_impotrant ul').append(li);
+        document.querySelector('div.veryimportant ul').append(li);
 
         this.id = veryImportantStore.length;     
        

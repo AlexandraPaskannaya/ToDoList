@@ -1,4 +1,6 @@
 import deleteImg from "./assets/images/delete.png";
+//import editImg from "./assets/images/edit.png";
+
 
 import "./assets/styles/style.css";
 
@@ -24,6 +26,11 @@ export default class Task{
         deleteBtn.src = deleteImg;
         deleteBtn.classList.add('deletBtn');
         li.append(deleteBtn);
+
+        /*const editBtn = document.createElement('img');
+        editBtn.src = editImg;
+        editBtn.classList.add('editBtn');
+        li.append(editBtn);*/
        
         const ul = document.querySelector('ul');
         ul.append(li);
