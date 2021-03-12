@@ -1,3 +1,3 @@
-export const UnimportantStore = [];
-export const ImportantStore = [];
-export const VeryimportantStore= [];
+export const unImportantStore = [];
+export const importantStore = [];
+export const veryImportantStore= [];

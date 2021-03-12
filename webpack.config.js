@@ -16,7 +16,7 @@ const config = {
         open: true,
         compress: true,
         hot: true,
-        port: 5004,
+        port: 4002,
     },
     plugins: [
         new HtmlWebpackPlugin({
