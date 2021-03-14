@@ -13,6 +13,7 @@ export default class VeryimportantTask extends Task {
 
         this.id = veryImportantStore.length;     
        
+        
         veryImportantStore.push(this);
 
         console.log("veryImportantStore", veryImportantStore);

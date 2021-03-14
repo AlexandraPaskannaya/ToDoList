@@ -32,21 +32,25 @@ export function createTask(event) {
 
      if (option[1].selected) {
         new UnimportantTask(text.value).create(li);
+        console.log(unImportantStore)
         text.value = '';
         option[1].selected = false;
-        tolacal();        
+        localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
+      
 
     } else if (option[2].selected) {
         new ImportantTask(text.value).create(li);
         text.value = '';
         option[2].selected = false;
-        tolacal();
+        localStorage.setItem('importantStore', JSON.stringify(importantStore));           
+
         
     } else if (option[3].selected) {
         new VeryimportantTask(text.value).create(li);
         text.value = '';
         option[3].selected = false;
-        tolacal();    }  
+        localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
+    }  
   
 }
 
@@ -71,7 +75,7 @@ export function checkedTask(event) {
         unImportantStore[unImportantIndex].checked = event.target.checked;
         console.log(unImportantStore, 'unImportantStore')
 
-        tolacal();
+        localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
 
     } else if (taskName === 'important') {
 
@@ -81,7 +85,7 @@ export function checkedTask(event) {
         importantStore[importantIndex].checked = event.target.checked;
         console.log(importantStore, 'importantStore')
 
-        tolacal();
+        localStorage.setItem('importantStore', JSON.stringify(importantStore));           
        
     } else if (taskName === 'veryimportant') {
      
@@ -91,7 +95,7 @@ export function checkedTask(event) {
         veryImportantStore[veryImportantIndex].checked = event.target.checked;
         console.log(veryImportantStore, 'veryImportantStore')
 
-        tolacal();
+        localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
         }
     }
 }
@@ -109,21 +113,21 @@ export function removeTask(event) {
             const unImportantIndex = unImportantStore.findIndex(unimportant => unimportant.id == taskType[taskName]);
             unImportantStore.splice(unImportantIndex, 1);
             calculateAttributes(unImportantStore, 'data-unimportant');
-            tolacal();
+            localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
             console.log('unImportantStore', unImportantStore);
 
         } else if (taskName === 'important') {
             const importantIndex = importantStore.findIndex(important => important.id == taskType[taskName]);
             importantStore.splice(importantIndex, 1);
             calculateAttributes(importantStore, 'data-important');
-            tolacal();
+            localStorage.setItem('importantStore', JSON.stringify(importantStore));           
             console.log('importantStore', importantStore);
 
         } else if (taskName === 'veryimportant') {
             const veryImportantIndex = veryImportantStore.findIndex(veryimportant => veryimportant.id == taskType[taskName]);
             veryImportantStore.splice(veryImportantIndex, 1);
             calculateAttributes(veryImportantStore, 'data-veryimportant');
-            tolacal();
+            localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
             console.log('veryImportantStore', veryImportantStore);
         }
     } else {
@@ -146,15 +150,15 @@ function calculateAttributes(store, attribute) {
 
 export function hideTasks(event) {
 
-   if (event.target.tagName == 'UL') {
-       return;
-   } else {
+   if (event.target.tagName == 'H3') {
        for(let li of Array.from(event.target.nextElementSibling.children)){
             if(li.firstElementChild.checked == true){
                 li.classList.toggle('hide');
                li.classList.add('show');
            }
        }
+   } else {
+       return;
    }
 }
 
@@ -173,7 +177,7 @@ function findDublicate(name){
     }
 }
 
-let todos;
+/*let todos;
 let list = document.querySelector('div.select_list');
 
  function tolacal() {
@@ -183,6 +187,5 @@ let list = document.querySelector('div.select_list');
   }
  if(localStorage.getItem('todos')){
     list.innerHTML = localStorage.getItem('todos')
-}
+}*/
 
-//localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));

@@ -7,7 +7,7 @@ import "./assets/styles/style.css";
 export default class Task{
 
     constructor(name, checked = false) {
-        this.name;
+        this.name = name;
         this.checked = checked;
     }
 
