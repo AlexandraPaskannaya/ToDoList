@@ -32,24 +32,21 @@ export function createTask(event) {
 
      if (option[1].selected) {
         new UnimportantTask(text.value).create(li);
-        console.log(unImportantStore)
         text.value = '';
         option[1].selected = false;
-        localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
-      
+        localStor();      
 
     } else if (option[2].selected) {
         new ImportantTask(text.value).create(li);
         text.value = '';
         option[2].selected = false;
-        localStorage.setItem('importantStore', JSON.stringify(importantStore));           
-
+        localStor();
         
     } else if (option[3].selected) {
         new VeryimportantTask(text.value).create(li);
         text.value = '';
         option[3].selected = false;
-        localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
+        localStor();
     }  
   
 }
@@ -75,7 +72,7 @@ export function checkedTask(event) {
         unImportantStore[unImportantIndex].checked = event.target.checked;
         console.log(unImportantStore, 'unImportantStore')
 
-        localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
+        localStor();
 
     } else if (taskName === 'important') {
 
@@ -85,8 +82,7 @@ export function checkedTask(event) {
         importantStore[importantIndex].checked = event.target.checked;
         console.log(importantStore, 'importantStore')
 
-        localStorage.setItem('importantStore', JSON.stringify(importantStore));           
-       
+        localStor();       
     } else if (taskName === 'veryimportant') {
      
         const veryImportantIndex = veryImportantStore.findIndex(veryimportant => veryimportant.id == taskType[taskName]);
@@ -95,7 +91,7 @@ export function checkedTask(event) {
         veryImportantStore[veryImportantIndex].checked = event.target.checked;
         console.log(veryImportantStore, 'veryImportantStore')
 
-        localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
+        localStor();
         }
     }
 }
@@ -113,21 +109,21 @@ export function removeTask(event) {
             const unImportantIndex = unImportantStore.findIndex(unimportant => unimportant.id == taskType[taskName]);
             unImportantStore.splice(unImportantIndex, 1);
             calculateAttributes(unImportantStore, 'data-unimportant');
-            localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
+            localStor();
             console.log('unImportantStore', unImportantStore);
 
         } else if (taskName === 'important') {
             const importantIndex = importantStore.findIndex(important => important.id == taskType[taskName]);
             importantStore.splice(importantIndex, 1);
             calculateAttributes(importantStore, 'data-important');
-            localStorage.setItem('importantStore', JSON.stringify(importantStore));           
+            localStor();
             console.log('importantStore', importantStore);
 
         } else if (taskName === 'veryimportant') {
             const veryImportantIndex = veryImportantStore.findIndex(veryimportant => veryimportant.id == taskType[taskName]);
             veryImportantStore.splice(veryImportantIndex, 1);
             calculateAttributes(veryImportantStore, 'data-veryimportant');
-            localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
+            localStor();
             console.log('veryImportantStore', veryImportantStore);
         }
     } else {
@@ -177,15 +173,68 @@ function findDublicate(name){
     }
 }
 
-/*let todos;
-let list = document.querySelector('div.select_list');
+function localStor(){
 
- function tolacal() {
-    console.log('local storage')
-  todos = list.innerHTML;
-  localStorage.setItem('todos', todos);
-  }
- if(localStorage.getItem('todos')){
-    list.innerHTML = localStorage.getItem('todos')
-}*/
+    localStorage.setItem('unImportantStore', JSON.stringify(unImportantStore));
 
+    localStorage.setItem('importantStore', JSON.stringify(importantStore));   
+
+    localStorage.setItem('veryImportantStore', JSON.stringify(veryImportantStore));
+
+}
+
+export function tasksfromlocal() {
+    console.log('loading all tasks');
+
+    let lsUnImpt = localStorage.getItem('unImportantStore').length;
+    let lsImpt = localStorage.getItem('importantStore').length;
+    let lsVeryImpt = localStorage.getItem('veryImportantStore').length;
+    let li = document.createElement('li');
+    li.classList.add('show');
+
+
+   if (lsUnImpt >= 0) {
+        
+       for (let i = 0; i < lsUnImpt; i++) {
+            const key = localStorage.key(i);
+
+             if(key == 'unImportantStore') {
+
+                const value = JSON.parse(localStorage.getItem('unImportantStore'));
+                console.log(value, key, 1);
+                new UnimportantTask(value).create(li);;
+                //document.querySelector('div.unimportant ul').innerHTML = value;
+            }
+        }
+    }
+
+   if (lsImpt >= 0) {
+        
+        for (let i = 0; i < lsImpt; i++) {
+            const key = localStorage.key(i);
+
+             if(key == 'importantStore') {
+
+                const value = JSON.parse(localStorage.getItem('importantStore'));
+                console.log(value, key, 2);
+                document.querySelector('div.important ul').innerHTML = value;
+                 //new ImportantTask(text.value).create(li);
+             }
+        }
+    }
+
+   if (lsVeryImpt >= 0) {
+
+        for (let i = 0; i < lsVeryImpt; i++) {
+            const key = localStorage.key(i);
+            
+             if(key == 'veryImportantStore') {
+               
+                const value = JSON.parse(localStorage.getItem('veryImportantStore'));
+                console.log(value, key, 3);
+                document.querySelector('div.veryimportant ul').innerHTML = value;
+                //new VeryimportantTask(text.value).create(li);
+             }
+        }
+    } 
+}
