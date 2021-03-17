@@ -191,19 +191,23 @@ export function tasksfromlocal() {
     let lsVeryImpt = localStorage.getItem('veryImportantStore').length;
     let li = document.createElement('li');
     li.classList.add('show');
+    
+   
 
-
-   if (lsUnImpt >= 0) {
-        
+    if (lsUnImpt >= 0) {
+               
        for (let i = 0; i < lsUnImpt; i++) {
             const key = localStorage.key(i);
 
              if(key == 'unImportantStore') {
 
-                const value = JSON.parse(localStorage.getItem('unImportantStore'));
+                const value = JSON.parse(localStorage.getItem(key));
                 console.log(value, key, 1);
-                new UnimportantTask(value).create(li);;
-                //document.querySelector('div.unimportant ul').innerHTML = value;
+
+                for (let i = 0; i < value.length; i++){
+
+                    new UnimportantTask(value[i].name).create(li);
+                }          
             }
         }
     }
@@ -213,13 +217,16 @@ export function tasksfromlocal() {
         for (let i = 0; i < lsImpt; i++) {
             const key = localStorage.key(i);
 
-             if(key == 'importantStore') {
+            if(key == 'importantStore') {
 
                 const value = JSON.parse(localStorage.getItem('importantStore'));
                 console.log(value, key, 2);
-                document.querySelector('div.important ul').innerHTML = value;
-                 //new ImportantTask(text.value).create(li);
-             }
+
+                for (let i = 0; i < value.length; i++){
+
+                    new ImportantTask(value[i].name).create(li);
+                }          
+            }
         }
     }
 
@@ -229,12 +236,19 @@ export function tasksfromlocal() {
             const key = localStorage.key(i);
             
              if(key == 'veryImportantStore') {
-               
+
                 const value = JSON.parse(localStorage.getItem('veryImportantStore'));
                 console.log(value, key, 3);
-                document.querySelector('div.veryimportant ul').innerHTML = value;
-                //new VeryimportantTask(text.value).create(li);
-             }
+
+                for (let i = 0; i < value.length; i++){
+
+                    new VeryimportantTask(value[i].name).create(li);
+                }          
+            }
         }
     } 
 }
+
+
+
+

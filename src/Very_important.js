@@ -12,7 +12,6 @@ export default class VeryimportantTask extends Task {
         document.querySelector('div.veryimportant ul').append(li);
 
         this.id = veryImportantStore.length;     
-       
         
         veryImportantStore.push(this);
 

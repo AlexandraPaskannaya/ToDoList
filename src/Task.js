@@ -12,14 +12,14 @@ export default class Task{
     }
 
     create(li) {
-        let text = document.querySelector('input[type="text"]');
+        //let text = document.querySelector('input[type="text"]');
 
         const input = document.createElement('input');
         input.type = 'checkbox';
         li.append(input);
    
         const label = document.createElement('label');
-        label.textContent = text.value;
+        label.textContent = this.name;
         li.append(label);
         
         const deleteBtn = document.createElement('img');
