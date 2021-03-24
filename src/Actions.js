@@ -19,6 +19,8 @@ export function createTask(event) {
     let text = document.querySelector('input[type="text"]');
     let option = document.querySelectorAll('option');
     let li = document.createElement('li');
+    text.value = text.value.trim();
+    
     li.classList.add('show');
 
     const { value } = text;
@@ -35,6 +37,7 @@ export function createTask(event) {
         text.value = '';
         option[1].selected = false;
         localStor();      
+        
 
     } else if (option[2].selected) {
         new ImportantTask(text.value).create(li);
@@ -52,7 +55,6 @@ export function createTask(event) {
 }
 
 export function checkedTask(event) {
-   console.log('checked')
     if (event.target.tagName != 'INPUT') {
         return;
     } else {
@@ -184,71 +186,126 @@ function localStor(){
 }
 
 export function tasksfromlocal() {
-    console.log('loading all tasks');
 
-    let lsUnImpt = localStorage.getItem('unImportantStore').length;
-    let lsImpt = localStorage.getItem('importantStore').length;
-    let lsVeryImpt = localStorage.getItem('veryImportantStore').length;
-    let li = document.createElement('li');
-    li.classList.add('show');
+    let lsUnImpt = JSON.parse(localStorage.getItem('unImportantStore'));
+    let lsImpt = JSON.parse(localStorage.getItem('importantStore'));
+    let lsVeryImpt = JSON.parse(localStorage.getItem('veryImportantStore'));
     
-   
+    console.log('loading all tasks', lsUnImpt, lsImpt, lsVeryImpt);
 
-    if (lsUnImpt >= 0) {
+    if (lsUnImpt.length >= 0) {
                
-       for (let i = 0; i < lsUnImpt; i++) {
-            const key = localStorage.key(i);
-
-             if(key == 'unImportantStore') {
-
-                const value = JSON.parse(localStorage.getItem(key));
-                console.log(value, key, 1);
-
-                for (let i = 0; i < value.length; i++){
-
-                    new UnimportantTask(value[i].name).create(li);
-                }          
-            }
-        }
-    }
-
-   if (lsImpt >= 0) {
-        
-        for (let i = 0; i < lsImpt; i++) {
-            const key = localStorage.key(i);
-
-            if(key == 'importantStore') {
-
-                const value = JSON.parse(localStorage.getItem('importantStore'));
-                console.log(value, key, 2);
-
-                for (let i = 0; i < value.length; i++){
-
-                    new ImportantTask(value[i].name).create(li);
-                }          
-            }
-        }
-    }
-
-   if (lsVeryImpt >= 0) {
-
-        for (let i = 0; i < lsVeryImpt; i++) {
-            const key = localStorage.key(i);
+       for (let i = 0; i < lsUnImpt.length; i++) {
             
-             if(key == 'veryImportantStore') {
+            let li = document.createElement('li');
+            li.classList.add('show');
 
-                const value = JSON.parse(localStorage.getItem('veryImportantStore'));
-                console.log(value, key, 3);
+            new UnimportantTask(lsUnImpt[i].name, lsUnImpt[i].checked).create(li);
+            }          
+    }
+    
+    if (lsImpt.length >= 0) {
+               
+        for (let i = 0; i < lsImpt.length; i++) {
+             
+             let li = document.createElement('li');
+             li.classList.add('show');
+ 
+             new ImportantTask(lsImpt[i].name, lsImpt[i].checked).create(li);
+             }          
+    }
 
-                for (let i = 0; i < value.length; i++){
-
-                    new VeryimportantTask(value[i].name).create(li);
-                }          
-            }
-        }
-    } 
+      
+    if (lsVeryImpt.length >= 0) {
+               
+        for (let i = 0; i < lsVeryImpt.length; i++) {
+             
+             let li = document.createElement('li');
+             li.classList.add('show');
+ 
+             new VeryimportantTask(lsVeryImpt[i].name, lsVeryImpt[i].checked).create(li);
+             }          
+    }
 }
 
 
+export function editTasks(event) {
+    console.log('edit');
 
+    let add_hide = document.querySelector('div.add_container');
+
+    if (add_hide.classList.contains("hide_input")) {
+        add_hide.classList.add("show_input");
+    } 
+    
+
+    if (event.target.classList.contains('editBtn') && event.target.parentElement.firstElementChild.checked === false) {
+             
+        const inputText = document.querySelector('input[type="text"]');
+        inputText.value = event.target.previousElementSibling.textContent;
+        const select = document.querySelector('select'); 
+        /*const listContainer = Array.from(document.querySelector('.select_list').children);
+        const editTask = Array.from(listContainer[0].lastElementChild.children).find(el => el.classList.contains('edit'));*/
+
+        if( inputText.value = event.target.previousElementSibling.textContent) {
+
+            console.log(inputText.value);
+            
+            event.target.previousElementSibling.textContent = inputText.value;
+
+        }
+
+       if (event.target.closest('div').className === 'unimportant') {
+
+            select.value = 'unimportant';
+            event.target.parentElement.classList.add('edit');
+            event.target.closest('.unimportant').classList.add('edit');
+            console.log('unimportant edit');
+           
+           
+        } else if (event.target.closest('div').className === 'important') {
+
+            select.value = 'important';
+            event.target.parentElement.classList.add('edit');
+            event.target.closest('.important').classList.add('edit');
+            
+            console.log('important edit')
+
+        } else if (event.target.closest('div').className === 'veryimportant') {
+
+            select.value = 'veryimportant';
+            event.target.parentElement.classList.add('edit');
+            event.target.closest('.veryimportant').classList.add('edit');
+
+            console.log('veryimportant edit')
+
+        }
+
+    } else return 
+
+}
+
+/*
+ function changeSelect(inputText) {
+
+    const listContainer = Array.from(document.querySelector('.select_list').children);
+    const select = document.querySelector('select');
+
+    if (listContainer[0].classList.contains('edit')){
+        const editTask = Array.from(listContainer[0].lastElementChild.children).find(el => el.classList.contains('edit'));
+        const taskType = editTask.dataset;
+        const taskTypeName = Object.keys(editTask.dataset)[0];
+
+        if(select.value === 'unimportant') {
+
+            Array.from(editTask.children)[1].textContent = inputText.value.trim();   
+
+        } else {
+            editTask.remove();
+        }
+
+
+    } else return
+
+}*/
 

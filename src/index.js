@@ -1,9 +1,9 @@
-import {show_hide, createTask, checkedTask, removeTask, hideTasks, tasksfromlocal} from "./Actions.js";
+import {show_hide, createTask, checkedTask, removeTask, hideTasks, tasksfromlocal, editTasks} from "./Actions.js";
 
 const addBtn = document.querySelector('button[data-action="addBtn"]');
 const createBtn = document.querySelector('button[data-action="create"]');
 const titles = document.querySelector('div.select_list');
-
+//const editBtn = document.getElementsByClassName('editBtn');
 
 window.addEventListener('load', () => tasksfromlocal());
    
@@ -22,3 +22,8 @@ titles.addEventListener('click', (event) => removeTask(event));
 
 //show-hide titles
 titles.addEventListener('click', hideTasks);
+
+//edit tasks
+titles.addEventListener('click', (event) => editTasks(event, addBtn));
+
+
